@@ -4,8 +4,14 @@ phases:
   post_build:
     commands:
       - mvn package
+      - mv target/my-web-app.war my-web-app.war
 artifacts:
   files:
-    - '**/*'
-  base-directory: 'target/my-web-app'
+    - my-web-app.war
+    - .ebextensions/**/*
+eb_codebuild_settings:
+  CodeBuildServiceRole: my-codebuild-2-servicerole
+  ComputeType: BUILD_GENERAL1_SMALL
+  Image: aws/codebuild/java:openjdk-8
+  Timeout: 60
 
